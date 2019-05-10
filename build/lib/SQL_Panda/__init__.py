@@ -1,6 +1,5 @@
 
 import pandas as pd, sqlite3
-
 class Sqldf:
     '''
     Wraps SQLite3 instance to streamline the SQL query to Pandas DataFrame process.
@@ -18,14 +17,20 @@ class Sqldf:
         sdf.tables()
 
         sdf.head("table_name")
+
+        sdf.__any_column__
+        #there is no any column method, but the sdf is preloaded with the columns as dataframes.
     '''
     def __init__(self,path):
         '''
         Ex./
             sdataframe = Sqldf("data.sqlite")
         '''
-        self.conn = sqlite3.connect(path)
-        self.c = self.conn.cursor()
+        self.connection = sqlite3.connect(path)
+        self.cursor = self.connection.cursor()
+        self.__cached_tables__ = dict()
+        self.__add_tables__()
+    prop = property(fget=lambda self:"Hi")
     def q(self,query):
         '''
         For general soft queries. Does not mutate database file, but will add changes to cursor.
@@ -36,9 +41,9 @@ class Sqldf:
         Returns:
             Panda dataframe (empty if no respose).
         '''
-        self.c.execute(query)
-        fetched = self.c.fetchall()
-        columns = [x[0] for x in self.c.description]
+        self.cursor.execute(query)
+        fetched = self.cursor.fetchall()
+        columns = [x[0] for x in self.cursor.description]
         if len(fetched) == 0:
             return pd.DataFrame(columns=columns)
         df = pd.DataFrame(fetched)
@@ -76,5 +81,12 @@ class Sqldf:
         see Sqldf.q() for details
         '''
         df = self.q(query)
-        self.conn.commit()
+        self.connection.commit()
+        self.__add_tables__()
         return df
+    def __add_tables__(self):
+        self.__cached_tables__ = dict()
+        for table_name in self.tables().name:
+            self.__dict__[table_name] = self.__get_table__(table_name)
+    def __get_table__(self,table_name):
+        return self.q(f"select * from {table_name}")
