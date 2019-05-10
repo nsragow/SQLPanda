@@ -32,13 +32,13 @@ class Sqldf:
         Returns:
             Panda series with all table names in DB.
         '''
-        return self.s('Select name from sqlite_master where sqlite_master.type like \'table\'')
+        return self.q('Select name from sqlite_master where sqlite_master.type like \'table\'')
     def info(self):
         '''
         Returns:
             Pandas dataframe with all info from sqlite_master
         '''
-        return self.s('Select * from sqlite_master')
+        return self.q('Select * from sqlite_master')
     def head(self,table,length = 5):
         '''
         Similar to Pandas head method, but requires a table name.
@@ -51,7 +51,7 @@ class Sqldf:
         Returns:
             Pandas dataframe of head of table
         '''
-        return self.s(f'Select * from {table} limit {length}')
+        return self.q(f'Select * from {table} limit {length}')
     def commit(self,query):
         '''
         Runs query and writes back all changes to database file.

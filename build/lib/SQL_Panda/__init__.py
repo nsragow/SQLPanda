@@ -2,10 +2,27 @@
 import pandas as pd, sqlite3
 
 class Sqldf:
+    '''
+    Wraps SQLite3 instance to streamline the SQL query to Pandas DataFrame process.
+
+    Ex./
+
+        import SQL_Panda as spd
+
+        sdf = spd.Sqldf("data.sqlite")
+        #where data.splite is the SQLite DB file
+
+    Main method examples:
+        sdf.q("Select * from table_name")
+
+        sdf.tables()
+
+        sdf.head("table_name")
+    '''
     def __init__(self,path):
         '''
         Ex./
-            sdataframe = sqldf("data.sqlite")
+            sdataframe = Sqldf("data.sqlite")
         '''
         self.conn = sqlite3.connect(path)
         self.c = self.conn.cursor()
@@ -32,13 +49,13 @@ class Sqldf:
         Returns:
             Panda series with all table names in DB.
         '''
-        return self.s('Select name from sqlite_master where sqlite_master.type like \'table\'')
+        return self.q('Select name from sqlite_master where sqlite_master.type like \'table\'')
     def info(self):
         '''
         Returns:
             Pandas dataframe with all info from sqlite_master
         '''
-        return self.s('Select * from sqlite_master')
+        return self.q('Select * from sqlite_master')
     def head(self,table,length = 5):
         '''
         Similar to Pandas head method, but requires a table name.
@@ -51,7 +68,7 @@ class Sqldf:
         Returns:
             Pandas dataframe of head of table
         '''
-        return self.s(f'Select * from {table} limit {length}')
+        return self.q(f'Select * from {table} limit {length}')
     def commit(self,query):
         '''
         Runs query and writes back all changes to database file.
