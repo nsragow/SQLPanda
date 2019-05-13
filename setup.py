@@ -1,10 +1,10 @@
 from setuptools import setup
 import setuptools
 
-setup(name='sql_panda_wrapper',
-      version='0.1.0',
-      description='Panda wrapper for SQLite',
-      url='https://github.com/nsragow/SQLPanda',
+setup(name='sql_panda_test',
+      version='6.0.0',
+      description='Panda wrapper testtt',
+
       author='Noah Sragow',
       author_email='nsragow@gmail.com',
       license='MIT',

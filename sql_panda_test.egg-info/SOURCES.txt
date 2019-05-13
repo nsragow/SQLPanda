@@ -1,0 +1,8 @@
+setup.py
+sql_panda_test.egg-info/PKG-INFO
+sql_panda_test.egg-info/SOURCES.txt
+sql_panda_test.egg-info/dependency_links.txt
+sql_panda_test.egg-info/not-zip-safe
+sql_panda_test.egg-info/top_level.txt
+testypanda/__init__.py
+testypanda/other.py

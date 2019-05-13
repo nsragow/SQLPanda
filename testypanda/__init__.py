@@ -1,12 +1,19 @@
 
 import pandas as pd, sqlite3
-class Sqldf:
+import other
+def load(table_name):
+    '''
+    Convinience method for creating Sqldf
+    '''
+    return Sqldf(table_name)
+
+class some_other_class:
     '''
     Wraps SQLite3 instance to streamline the SQL query to Pandas DataFrame process.
 
     Ex./
 
-        import SQL_Panda as spd
+        import SQLPanda as spd
 
         sdf = spd.Sqldf("data.sqlite")
         #where data.splite is the SQLite DB file
@@ -28,7 +35,7 @@ class Sqldf:
         '''
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
-        self.__cached_tables__ = dict()
+        self.__table_names__ = []
         self.__add_tables__()
     prop = property(fget=lambda self:"Hi")
     def q(self,query):
@@ -43,12 +50,13 @@ class Sqldf:
         '''
         self.cursor.execute(query)
         fetched = self.cursor.fetchall()
-        columns = [x[0] for x in self.cursor.description]
-        if len(fetched) == 0:
-            return pd.DataFrame(columns=columns)
-        df = pd.DataFrame(fetched)
-        df.columns = columns
-        return df
+        if self.cursor.description is not None:
+            columns = [x[0] for x in self.cursor.description]
+            if len(fetched) == 0:
+                return pd.DataFrame(columns=columns)
+            df = pd.DataFrame(fetched)
+            df.columns = columns
+            return df
     def tables(self):
         '''
         Returns:
@@ -85,8 +93,11 @@ class Sqldf:
         self.__add_tables__()
         return df
     def __add_tables__(self):
-        self.__cached_tables__ = dict()
+        for table_name in self.__table_names__:
+            del self.__dict__[table_name]
+        self.__table_names__ = []
         for table_name in self.tables().name:
             self.__dict__[table_name] = self.__get_table__(table_name)
+            self.__table_names__.append(table_name)
     def __get_table__(self,table_name):
         return self.q(f"select * from {table_name}")

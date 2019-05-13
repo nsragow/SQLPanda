@@ -1,8 +1,8 @@
 Metadata-Version: 1.0
-Name: sql-panda-wrapper
-Version: 0.1.0
-Summary: Panda wrapper for SQLite
-Home-page: https://github.com/nsragow/SQLPanda
+Name: sql-panda-test
+Version: 6.0.0
+Summary: Panda wrapper testtt
+Home-page: UNKNOWN
 Author: Noah Sragow
 Author-email: nsragow@gmail.com
 License: MIT
