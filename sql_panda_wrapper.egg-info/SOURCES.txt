@@ -1,5 +1,5 @@
 setup.py
-SQL_Panda/__init__.py
+SQLPanda/__init__.py
 sql_panda_wrapper.egg-info/PKG-INFO
 sql_panda_wrapper.egg-info/SOURCES.txt
 sql_panda_wrapper.egg-info/dependency_links.txt
