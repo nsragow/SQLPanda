@@ -5,6 +5,8 @@ def load(table_name):
     Convinience method for creating Sqldf
     '''
     return Sqldf(table_name)
+def lite_load(table_name):
+    return LiteSqldf(table_name)
 
 class Sqldf:
     '''
@@ -100,3 +102,6 @@ class Sqldf:
             self.__table_names__.append(table_name)
     def __get_table__(self,table_name):
         return self.q(f"select * from {table_name}")
+class LiteSqldf(Sqldf):
+    def __add_tables__(self):
+        pass
