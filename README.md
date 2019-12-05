@@ -3,6 +3,10 @@
 
 If you want to read an sqlite file with a pandas dataframe in two lines of python this is the package for you.
 
+### Installation
+
+    pip install sql-panda-wrapper
+
 ### From the documentation: 
 
 Wraps SQLite3 instance to streamline the SQL query to Pandas DataFrame process.
