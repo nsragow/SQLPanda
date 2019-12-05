@@ -1,33 +1,32 @@
-
 import pandas as pd, sqlite3
-def load(table_name):
-    '''
-    Convinience method for creating Sqldf
-    '''
-    return Sqldf(table_name)
-def lite_load(table_name):
-    return LiteSqldf(table_name)
 
 class Sqldf:
     '''
     Wraps SQLite3 instance to streamline the SQL query to Pandas DataFrame process.
 
-    Ex./
+    Any DataFrames produced by this object are detached from the sqlite database (so
+    mutating the df's will not have an effect on the source table)
 
-        import SQLPanda as spd
+    Warning: Can be slow with large database files. In such a case use the lite_load
+    method inplace of the load method.
 
-        sdf = spd.Sqldf("data.sqlite")
+
+    Setup:
+
+        from SQLPanda import load
+
+        sdf = load("data.sqlite")
         #where data.splite is the SQLite DB file
 
     Main method examples:
-        sdf.q("Select * from table_name")
+        df = sdf.q("Select * from table_name")
 
-        sdf.tables()
+        table_names = sdf.tables()
 
-        sdf.head("table_name")
+        df_head = sdf.head("table_name")
 
-        sdf.__any_column__
-        #there is no any column method, but the sdf is preloaded with the columns as dataframes.
+        df = sdf.__name_of_table_in_sqlite_db__
+
     '''
     def __init__(self,path):
         '''
@@ -102,6 +101,3 @@ class Sqldf:
             self.__table_names__.append(table_name)
     def __get_table__(self,table_name):
         return self.q(f"select * from {table_name}")
-class LiteSqldf(Sqldf):
-    def __add_tables__(self):
-        pass

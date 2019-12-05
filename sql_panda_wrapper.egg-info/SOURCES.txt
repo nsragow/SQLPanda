@@ -1,5 +1,12 @@
+setup.cfg
 setup.py
 SQLPanda/__init__.py
+SQLPanda/BigPanda/__init__.py
+SQLPanda/BigPanda/bigpanda.py
+SQLPanda/LitePanda/__init__.py
+SQLPanda/LitePanda/litepanda.py
+SQLPanda/api/__init__.py
+SQLPanda/api/api.py
 sql_panda_wrapper.egg-info/PKG-INFO
 sql_panda_wrapper.egg-info/SOURCES.txt
 sql_panda_wrapper.egg-info/dependency_links.txt

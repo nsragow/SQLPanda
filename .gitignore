@@ -1,0 +1,4 @@
+dist/
+build/
+sql_panda_wrapper.egg-info/
+.DS_Store
